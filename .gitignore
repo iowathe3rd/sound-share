@@ -46,4 +46,4 @@ out
 
 # Env
 
-./apps/**/.env
+apps/**/*.env
