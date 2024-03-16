@@ -47,3 +47,4 @@ out
 # Env
 
 apps/**/*.env
+*.env
