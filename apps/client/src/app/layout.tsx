@@ -3,6 +3,7 @@ import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 import Footer from '../components/layout/Footer';
 import Header from '../components/layout/Header';
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 export const metadata = {
   title: 'Welcome to client',
@@ -17,11 +18,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+      <UserProvider>
         <Theme>
           <Header/>
           {children}
           <Footer/>
         </Theme>
+      </UserProvider>
       </body>
     </html>
   );
