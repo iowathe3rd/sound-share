@@ -46,5 +46,6 @@ out
 
 # Env
 
-apps/**/*.env.**
-*.env
+.env
+apps/server/.env
+apps/client/.env.local
