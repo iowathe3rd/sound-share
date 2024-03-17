@@ -1,8 +1,5 @@
 import './global.css';
 import '@radix-ui/themes/styles.css';
-import { Theme } from '@radix-ui/themes';
-import Footer from '../components/layout/Footer';
-import Header from '../components/layout/Header';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 export const metadata = {
@@ -18,13 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      <UserProvider>
-        <Theme>
-          <Header/>
+        <UserProvider>
           {children}
-          <Footer/>
-        </Theme>
-      </UserProvider>
+        </UserProvider>
       </body>
     </html>
   );
