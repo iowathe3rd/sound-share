@@ -12,3 +12,48 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       String  @id @default(uuid())
+  username String
+  email    String  @unique
+  tracks   Track[]
+}
+
+model Track {
+  id                String              @id @default(uuid())
+  title             String
+  description       String?
+  awsUrl            String
+  coverUrl          String
+  author            User                @relation(fields: [authorId], references: [id])
+  authorId          String
+  comments          Comment[]
+  TracksOnPlaylists TracksOnPlaylists[]
+}
+
+model Comment {
+  id      String @id @default(uuid())
+  text    String
+  Track   Track  @relation(fields: [trackId], references: [id])
+  trackId String
+}
+
+model Playlist {
+  id                String              @id @default(uuid())
+  title             String
+  description       String?
+  coverUrl          String
+  TracksOnPlaylists TracksOnPlaylists[]
+}
+
+model TracksOnPlaylists {
+  track      Track    @relation(fields: [trackId], references: [id])
+  trackId    String // relation scalar field (used in the `@relation` attribute above)
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  playlistId String // relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([trackId, playlistId])
+}
