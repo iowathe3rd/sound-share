@@ -1,4 +1,8 @@
 import './global.css';
+import '@radix-ui/themes/styles.css';
+import { Theme } from '@radix-ui/themes';
+import Footer from '../components/layout/Footer';
+import Header from '../components/layout/Header';
 
 export const metadata = {
   title: 'Welcome to client',
@@ -12,7 +16,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Theme>
+          <Header/>
+          {children}
+          <Footer/>
+        </Theme>
+      </body>
     </html>
   );
 }
