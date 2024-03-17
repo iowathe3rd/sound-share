@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
+import {db} from "../../lib/prisma";
+import {PutObjectCommand} from "@aws-sdk/client-s3";
 
 @Injectable()
 export class TrackService {
-  create(createTrackDto: CreateTrackDto) {
-    return 'This action adds a new track';
+  async create(createTrackDto: CreateTrackDto & {file: Express.Multer.File}) {
+    const awsCommand = new PutObjectCommand({
+      Bucket: "",
+      Key: '',
+      Body: ""
+    })
   }
 
   findAll() {
