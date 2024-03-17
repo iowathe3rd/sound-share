@@ -24,7 +24,7 @@ model Track {
   id                String              @id @default(uuid())
   title             String
   description       String?
-  awsUrl            String
+  awsKey            String
   coverUrl          String
   author            User                @relation(fields: [authorId], references: [id])
   authorId          String

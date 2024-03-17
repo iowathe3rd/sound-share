@@ -9,7 +9,7 @@ import {
   Res,
   BadGatewayException,
   HttpStatus,
-  UseInterceptors, UploadedFile
+  UseInterceptors, UploadedFile, Query, NotFoundException
 } from '@nestjs/common';
 import { TrackService } from './track.service';
 import { CreateTrackDto } from './dto/create-track.dto';
@@ -30,7 +30,8 @@ export class TrackController {
         title: createTrackDto.title,
         description: createTrackDto.description,
         coverUrl: createTrackDto.coverUrl,
-
+        file: file,
+        authorId: ''
       });
       return res.status(HttpStatus.CREATED).json({data: created});
     }catch (e) {
@@ -39,15 +40,24 @@ export class TrackController {
   }
 
   @Get()
-  findAll() {
-    return this.trackService.findAll();
+  async findAll(@Res() res: Response, @Query('limit') limit: number) {
+    try {
+      const found = await this.trackService.findAll(limit);
+      return res.status(HttpStatus.FOUND).json({ data: found });
+    }catch (error) {
+      throw new BadGatewayException(error);
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.trackService.findOne(+id);
+  async findOne(@Res() res: Response, @Param('id') id: string) {
+    try {
+      const found = await this.trackService.findOne(id);
+      return res.status(HttpStatus.FOUND).json({ data: found });
+    } catch (error) {
+      throw new BadGatewayException(error)
+    }
   }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTrackDto: UpdateTrackDto) {
     return this.trackService.update(+id, updateTrackDto);
